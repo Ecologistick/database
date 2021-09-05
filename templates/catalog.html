@@ -1,20 +1,43 @@
-{% extends "base.html" %}
-{% load static %}
-
-{% block title %}Каталог{% endblock %}
-{% block content %}
-    <div class="container">
-        <div class="header">
-            <h1><a href="/catalog">Каталог</a></h1>
-        </div>
-
-        <div class="sort-block">
-            {# Здесь должен быть раздел с сортировкой #}
-        </div>
-
-        <div class="content">
-            {# Здесь должен отображаться каталог с телефонами #}
-            {{ info }}
-        </div>
+{% extends "base.html" %} {% load static %} {% block title %}Каталог{% endblock %} {% block content %}
+<div class="container">
+    <div class="header">
+        <h1><a href="/catalog">Каталог</a></h1>
     </div>
+
+    <div class="sort-block">
+        {# Здесь должен быть раздел с сортировкой #}
+    </div>
+    <style>
+        td,
+        th {
+            padding: 3px;
+            border: 1px solid black;
+        }
+    </style>
+    <div class="content">
+        <a href="/catalog?sort=by_name"><button>По названию</button></a>
+        <a href="/catalog?sort=max_price"><button>По возрастанию цены</button></a>
+        <a href="/catalog?sort=min_price"><button>По убыванию цены</button></a>
+        <table>
+            <tr>
+                <th>id товара</th>
+                <th>Наименование</th>
+                <th>Картинка</th>
+                <th>Цена</th>
+                <th>Дата релиза</th>
+                <th>LTE</th>
+            </tr>
+            {% for phone in phones%}
+            <tr>
+                <td>{{phone.id}}</td>
+                <td><a href="/catalog/{{phone.slug}}">{{phone.name}}</a></td>
+                <td><img style="height: 100px" src="{{phone.image}}" alt="{{phone.name}}"></td>
+                <td>{{phone.price}}</td>
+                <td>{{phone.release_date}}</td>
+                <td>{{phone.lte_exists}}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+</div>
 {% endblock %}
